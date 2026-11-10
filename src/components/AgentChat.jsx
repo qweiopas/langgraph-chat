@@ -16,7 +16,7 @@ const AgentChat = ({ apiUrl, assistantId, onReset }) => {
 
   // 维护会话列表和当前激活的会话
   const [threads, setThreads] = useState(() => {
-    const saved = sessionStorage.getItem(storageKey);
+    const saved = localStorage.getItem(storageKey);
     return saved ? JSON.parse(saved) : [];
   });
   const [activeThreadId, setActiveThreadId] = useState(null);
@@ -30,7 +30,7 @@ const AgentChat = ({ apiUrl, assistantId, onReset }) => {
     }
     const updatedThreads = [newThread, ...threads];
     setThreads(updatedThreads);
-    sessionStorage.setItem(storageKey, JSON.stringify(updatedThreads));
+    localStorage.setItem(storageKey, JSON.stringify(updatedThreads));
     setActiveThreadId(newThreadId);
   });
 
@@ -50,7 +50,7 @@ const AgentChat = ({ apiUrl, assistantId, onReset }) => {
     e.stopPropagation();
     const updatedThreads = threads.filter(t => t.id !== id);
     setThreads(updatedThreads);
-    sessionStorage.setItem(storageKey, JSON.stringify(updatedThreads));
+    localStorage.setItem(storageKey, JSON.stringify(updatedThreads));
 
     // 如果删除的是当前正在聊的，清空右侧
     if (activeThreadId === id) {
@@ -72,7 +72,7 @@ const AgentChat = ({ apiUrl, assistantId, onReset }) => {
 
   // // 组件内部实现新建对话（清空缓存并刷新）
   // const handleNewThread = () => {
-  //   sessionStorage.removeItem("activeThreadId");
+  //   localStorage.removeItem("activeThreadId");
   //   window.location.reload();
   // };
 
